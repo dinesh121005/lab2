@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/dinesh121005/lab2.git'
+            }
+        }
+
+        stage('Install Dependencies and Build') {
+            steps {
+                dir('lab') {
+                    bat '"C:\\Program Files\\nodejs\\npm.cmd" install'
+                    bat '"C:\\Program Files\\nodejs\\npm.cmd" run build'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "React project built successfully"
+        }
+        failure {
+            echo "Build failed"
+        }
+    }
+}
